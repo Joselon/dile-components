@@ -11,6 +11,10 @@
     import "@dile/dile-action-card/dile-action-card.js";
   </script>
   <style>
+    body {
+      --dile-action-card-width: 90%;
+    }
+
     .dile-action-card {
       display: block;
     }
@@ -40,20 +44,26 @@
       <span slot="subtitle">Info subtitles</span>
     </dile-action-card>
 
-    <h2>Card with SubCards</h2>
+    <h2>Regular Action card with icons</h2>
+    <div id="action-card-with-icons"></div>
 
-    <dile-action-card title="Welcome to this card" options='["Action1","Action2"]'>
+    <h2>Action Card with Sub Action Cards</h2>
+
+    <dile-action-card title="Welcome to this card" options='["Action3","Action4"]'>
       <span slot="subtitle">Info subtitles</span>
       <dile-button-icon slot="subCardsButton" onclick="toggle()">SubCards</dile-button-icon>
       <div slot="subCards" id="subCards">
-        <dile-action-card title="This is a subCard" options='["Action3"]'>
+        <dile-action-card title="This is a subCard" options='["Action5"]'>
+          <span slot="subtitle">Info SubCard</span>
+        </dile-action-card>
+        <dile-action-card title="This is another subCard" options='["Action6"]'>
           <span slot="subtitle">Info SubCard</span>
         </dile-action-card>
       </div>
     </dile-action-card>
 
     <h2>Styled Action card</h2>
-    <dile-action-card title="I am a styled card" options='["Action1","Action2"]' class="styled">
+    <dile-action-card title="I am a styled action card" options='["Action7","Action8"]' class="styled">
       <span slot="subtitle">
         Info subtitle content1
       </span>
@@ -61,15 +71,30 @@
         Info subtitle content2
       </span>
     </dile-action-card>
+    <script type="module">
+      import { autoAwesomeIcon, deleteIcon } from '@dile/icons';
 
+      let actionCardWithIcons = document.createElement("dile-action-card");
+      actionCardWithIcons.title = "Title";
+      actionCardWithIcons.options = ['Awesome Action', 'Delete'];
+      actionCardWithIcons.icons = [autoAwesomeIcon, deleteIcon];
+      actionCardWithIcons.innerHTML = "<span slot='subtitle'>Info SubCard</span>"
+      const actionCardWithIconsDiv = document.getElementById("action-card-with-icons");
+      actionCardWithIconsDiv.append(actionCardWithIcons);
 
+      window.addEventListener('load', function (e) {
+        document.querySelectorAll('dile-action-card').forEach(function (item) {
+          item.addEventListener('dile-action-card-option-selected', function (e) {
+            console.log(e.detail)
+            e.stopPropagation();
+            item.innerHTML += '<span slot="subtitle">Event: Option Selected: ' + e.detail.selectedOption + '</span>';
+
+          });
+        })
+      }
+      );
+    </script>
     <script>
-      document.querySelectorAll('dile-action-card').forEach(function (item) {
-        item.addEventListener('dile-action-card-option-selected', function (e) {
-          console.log('action option card click', e.detail);
-        });
-      })
-
       function toggle() {
         const subCards = document.getElementById("subCards");
         if (subCards.style.display === 'block')
@@ -78,6 +103,13 @@
           subCards.style.display = 'block';
         }
       }
+    </script>
+
+    <script>
+
+
+
+
     </script>
 
     <footer><a href="index.html">Back</a></footer>

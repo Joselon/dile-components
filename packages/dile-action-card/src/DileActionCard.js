@@ -12,6 +12,7 @@ export class DileActionCard extends LitElement {
                 background-color:var(--dile-action-card-background-color,#f5f5f573);
                 border:var(--dile-action-card-border,2px solid #ccc);
                 border-radius:var(--dile-action-card-border-radius,0);
+                width:var(--dile-action-card-width,auto);
                 padding: 1rem;
             }
             #header {
